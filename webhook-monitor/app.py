@@ -19,7 +19,7 @@ def webhook():
             "to_branch": to_branch,
             "timestamp": timestamp
         }
-        return jsonify({'message': 'Push received', 'data', data}), 200
+        return jsonify({'message': 'Push received', 'data': data}), 200
     else:
         return jsonify({'message': 'Push not received or supported'}), 400
 
