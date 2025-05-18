@@ -19,18 +19,9 @@ def webhook():
             "to_branch": to_branch,
             "timestamp": timestamp
         }
-        else:
-            return jsonify({'message': 'Push not received or supported'}), 400
+        return jsonify({'message': 'Push received', 'data', data}), 200
+    else:
+        return jsonify({'message': 'Push not received or supported'}), 400
 
-        collection.insert_one(event_data)
-        return jsonify({'message': 'Push received'}), 200
-
-@app.route('/events', methods=['GET'])
-def get_events():
-    events = list(collection.find().sort("timestamp", -1).limit(10))
-    for event in events:
-        event['_id'] = str(event['_id'])
-    return jsonify(events), 200
-
-if __name__ = '__main__':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
