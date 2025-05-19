@@ -21,6 +21,14 @@ def index():
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
+
+# Push test to verify Prometheus is scraping correctly
+
+@app.route('/test_push')
+def test_push():
+    push_counter.labels(author="test", branch="test-branch").inc()
+    return "Test push counted!", 200
+
 # Monitor git push, by author, branch and timestamp
 
 @app.route('/webhook', methods=['POST'])
