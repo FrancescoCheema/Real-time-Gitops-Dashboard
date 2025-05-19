@@ -1,16 +1,30 @@
 from flask import Flask, request, jsonify
-from datetime import datetime
+from prometheus_client import Counter
 from dateutil import parser as date_parser
 import os
 import logging
 
 app = Flask(__name__)
 
+# Prometheus counter
+view_metric = Counter('view', ['push'])
+
+# Python logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
+# Webhook listener
 @app.route('/')
 def index():
     return "Webhook listener is running..", 200
+
+@app.route('/view/<id>')
+def view_push(id):
+    view_metric.labels(push=id).inc()
+    return "View %s" % id
+
+@app.route('/metrics')
+def metrics():
+    return generate_latest()
 
 # Monitor git push, by author, branch and timestamp
 
@@ -38,6 +52,7 @@ def webhook():
     except Exception as e:
         logging.error(f'Error processing webhook: {str(e)}', exc_info=True)
         return jsonify({'message': 'Error processing webhook'}), 500
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
