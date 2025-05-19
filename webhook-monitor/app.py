@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from prometheus_client import Counter
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 from dateutil import parser as date_parser
 import os
 import logging
@@ -17,7 +17,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 def index():
     return "Webhook listener is running..", 200
 
-
 @app.route('/metrics')
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
@@ -27,6 +26,12 @@ def metrics():
 @app.route('/webhook', methods=['POST'])
 def webhook(): 
     try:
+        payload = request.get_json(force=True)
+        logging.info(f"Received payload: {payload}")
+
+        event_type = request.headers.get('X-GitHub-Event')
+        logging.info(f"GitHub event type: {event_type}")
+
         if event_type == 'push':
 
             author = payload['pusher']['name']
@@ -39,6 +44,7 @@ def webhook():
                 "to_branch": to_branch,
                 "timestamp": timestamp
             }
+            push_counter.labels(author=author, branch=to_branch).inc()
 
             logging.info(f"Push received: {event_data}")
             return jsonify({'message': 'Push received', 'data': event_data}), 200
