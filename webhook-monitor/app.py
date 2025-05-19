@@ -17,16 +17,7 @@ def index():
 @app.route('/webhook', methods=['POST'])
 def webhook(): 
     try:
-        payload = request.get_json(force=True)
-        logging.info(f"Received payload: {payload}")
-        
-        event_type = request.headers.get('X-GitHub-Event')
-        logging.info(f"GitHub event type: {event_type}")
-
         if event_type == 'push':
-            # Validate required keys
-            if not all(k in payload for k in ['pusher', 'ref', 'head_commit']):
-                return jsonify({'message': 'Missing fields in payload'}), 400
 
             author = payload['pusher']['name']
             to_branch = payload['ref'].split('/')[-1]
