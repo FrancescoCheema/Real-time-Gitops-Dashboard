@@ -7,9 +7,6 @@ COPY /webhook-monitor/app.py  /app/
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip3 install -r requirements.txt
 
-RUN rm -rf ngrok.yml \
-    touch ngrok.yml
-
 COPY . /app/
 
 ENV PORT=8080
