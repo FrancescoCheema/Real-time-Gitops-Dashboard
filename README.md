@@ -66,6 +66,15 @@ github_push_total{author="FrancescoCheema", branch="main"} 3
 git clone https://github.com/yourusername/real-time-gitops-dashboard.git
 cd real-time-gitops-dashboard
 ```
+### OPTIONAL - If you prefer running the app outside of Docker, set up a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate   # On Windows use: venv\\Scripts\\activate
+pip install -r requirements.txt
+python app.py
+
+```
 
 ### 2. Configure Ngrok
 
