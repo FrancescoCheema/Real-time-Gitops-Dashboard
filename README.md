@@ -77,10 +77,12 @@ python app.py
 ```
 
 ### 2. Configure Ngrok
-``` You will need an Ngrok account, you can read the documentation here: https://ngrok.com/docs/getting-started/
+``` You will need an Ngrok account and an authtoken, you can read the documentation here: https://ngrok.com/docs/getting-started/
 
 Edit `ngrok.yml` with your details:
 ```yaml
+version:
+authtoken: "your authtoken" 
 tunnels:
   webhook:
     proto: http
