@@ -28,3 +28,9 @@ services:
       - ./ngrok.yml:/etc/ngrok.yml
     ports:
       - 4040:4040
+  prometheus:
+    image: prom/prometheus
+    ports:
+     - "9090:9090"
+    volumes:
+     - ./prometheus.yml:/etc/prometheus/prometheus.yml

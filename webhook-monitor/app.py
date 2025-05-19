@@ -7,7 +7,7 @@ import logging
 app = Flask(__name__)
 
 # Prometheus counter
-view_metric = Counter('view', ['push'])
+push_counter = Counter('github_push_total', 'Total Github push events', ['author', 'branch'])
 
 # Python logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -17,14 +17,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 def index():
     return "Webhook listener is running..", 200
 
-@app.route('/view/<id>')
-def view_push(id):
-    view_metric.labels(push=id).inc()
-    return "View %s" % id
 
 @app.route('/metrics')
 def metrics():
-    return generate_latest()
+    return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
 # Monitor git push, by author, branch and timestamp
 

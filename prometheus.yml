@@ -3,6 +3,6 @@ global:
   evaluation_interval: 30s
 
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: 'webhook-listener'
     static_configs:
-    - targets: ['example-prometheus:5050']
+    - targets: ['webhouse-listener:8080']
