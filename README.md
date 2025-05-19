@@ -69,9 +69,8 @@ cd real-time-gitops-dashboard
 
 ### 2. Configure Ngrok
 
-Edit `ngrok.yml` with your authtoken:
+Edit `ngrok.yml` with your details:
 ```yaml
-authtoken: YOUR_NGROK_TOKEN
 tunnels:
   webhook:
     proto: http
