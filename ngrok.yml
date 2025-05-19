@@ -1,0 +1,5 @@
+version: "2"
+tunnels:
+  webhook:
+    proto: http
+    addr: webhook-listener:8080
