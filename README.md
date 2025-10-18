@@ -1,7 +1,7 @@
 
 # Real-Time GitOps Dashboard
 
-A fully containerized observability platform for monitoring GitHub push activity in real time. This project leverages **Flask**, **Prometheus**, and **Grafana** to expose and visualize repository events.
+A fully containerized observability platform for monitoring GitHub push activity in real time. This project leverages Flask, Prometheus, and Grafana to expose and visualize repository events.
 
 ---
 
